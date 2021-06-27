@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".MainActivity">
+    <data>
+        <variable
+               name="viewModel"
+               type="com.example.fgmobileapp.viewmodel.FGViewModel">
+
+        </variable>
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                       android:layout_height="match_parent">
+        <Button
+                android:id="@+id/btnConnect"
+                android:layout_width="130dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="68dp"
+                android:text="Connect"
+                android:onClick="Connect"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <EditText
+                android:id="@+id/ipAddr"
+                android:layout_width="210dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="IP"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="32dp"/>
+
+
+        <EditText
+                android:id="@+id/port"
+                android:layout_width="84dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Port"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/ipAddr"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="44dp"/>
+        <SeekBar
+                android:id="@+id/seekBarHorizontal"
+                android:layout_width="353dp"
+                android:layout_height="14dp"
+                android:progress="@={viewModel.rudder, default=50}"
+                android:layout_marginTop="10dp"
+                android:indeterminate="false"
+                android:max="100"
+                android:min="0"
+                app:layout_constraintTop_toBottomOf="@+id/joystick" app:layout_constraintEnd_toEndOf="@+id/joystick"
+                app:layout_constraintStart_toStartOf="@+id/joystick"/>
+
+        <com.example.fgmobileapp.VerticalSeekBar
+                android:id="@+id/seekBarVertical"
+                android:progress="@={viewModel.throttle, default=0}"
+                android:layout_width="11dp"
+                android:layout_height="204dp"
+                android:layout_marginStart="16dp"
+                android:max="100"
+                android:min="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/joystick"
+                app:layout_constraintBottom_toBottomOf="@+id/joystick"/>
+
+        <TextView
+                android:id="@+id/txtPositions"
+                android:text="@{viewModel.description}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seekBarHorizontal" />
+
+        <com.example.fgmobileapp.JoyStickComponent
+                android:id="@+id/joystick"
+                onPositionChange="@{(aileron , elevator) -> viewModel.onPositionChanged(aileron, elevator)}"
+                android:layout_width="353dp"
+                android:layout_height="204dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:background="#FFFFFF"
+                app:layout_constraintStart_toEndOf="@+id/seekBarVertical"
+                app:layout_constraintTop_toBottomOf="@+id/btnConnect" android:layout_marginLeft="12dp">
+
+        </com.example.fgmobileapp.JoyStickComponent>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
